@@ -10,6 +10,10 @@ st.title("Fonds de placement")
 st.write('Please upload a csv. You can get the file from here: https://www.gerifonds.ch/en/classes-search')
 file=st.sidebar.file_uploader("Upload Files", type=["csv"])
 
+st.sidebar.title('Pick a performance')
+min = st.sidebar.slider('Min', 0, 20, 0)
+max = st.sidebar.slider('Max', 0, 20, 20)
+
 if file:
     # Load your data into a pandas dataframe
 
@@ -24,10 +28,15 @@ if file:
 
     my_dataframe['Perf YTD'] = pd.to_numeric(my_dataframe['Perf YTD'].str.replace('%', '').str.replace(',', '.'),errors='coerce')
     #st.bar_chart(my_dataframe,x='Classe', y='Perf YTD')
-
+    
+    # get only values between min and max
+    my_dataframe = my_dataframe[(my_dataframe['Perf YTD'] >= min) & (my_dataframe['Perf YTD'] <= max)]
+    
     fig = px.bar(my_dataframe, x='Classe', y='Perf YTD')
     # Writes a component similar to st.write()
     selected_points = plotly_events(fig)
+    
+  
 
     if selected_points:
 
