@@ -1,8 +1,6 @@
-import io
 import requests
 import streamlit as st
 import pandas as pd
-import wget
 from streamlit_plotly_events import plotly_events
 import plotly.express as px
 import re
